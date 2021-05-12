@@ -1,0 +1,39 @@
+import React from "react";
+import "./Node.css";
+
+const Node = ({
+  row,
+  col,
+  isFinish,
+  isStart,
+  isWall,
+  onMouseDown,
+  onMouseEnter,
+  onMouseUp,
+  onMouseLeave,
+}) => {
+  const className = isFinish
+    ? "node-finish"
+    : isStart
+    ? "node-start"
+    : isWall
+    ? "node-wall"
+    : "node";
+
+  return (
+    <div
+      className={className}
+      id={`node-${row}-${col}`}
+      onMouseDown={() => {
+        onMouseDown(row, col, isStart, isFinish);
+      }}
+      onMouseEnter={() => onMouseEnter(row, col, isStart, isFinish)}
+      onMouseLeave={() => onMouseLeave(row, col)}
+      onMouseUp={() => {
+        onMouseUp(row, col);
+      }}
+    ></div>
+  );
+};
+
+export default Node;

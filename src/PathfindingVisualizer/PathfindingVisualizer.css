@@ -1,0 +1,288 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600;700&family=Roboto:wght@400;700&display=swap");
+
+/* NAVBAR */
+
+* {
+  justify-content: center;
+}
+
+.navBar {
+  height: 5.5vh;
+  min-height: 50px;
+  background-color: rgb(12, 53, 71);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-left: 45px;
+  padding-right: 70px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  min-width: 100px;
+}
+
+.homeButton {
+  font-family: "Roboto Mono", monospace;
+  color: whitesmoke;
+  transition: color 0.2s;
+  text-decoration: none;
+  font-size: 22px;
+  line-height: 1.42;
+  font-weight: 700;
+  padding: 0px 21px;
+}
+
+.homeButton:hover {
+  transition: color 0.2s;
+  color: white;
+}
+
+button {
+  font-family: "Roboto Mono", monospace;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
+  height: 75%;
+  font-size: 14px;
+  padding: 0px 21px;
+  line-height: 6vh;
+  font-weight: 700;
+  background-color: rgba(0, 0, 0, 0);
+  color: whitesmoke;
+  transition: color 0.3s;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  /* background-color: black; */
+  transition: color 0.2s;
+  color: white;
+  cursor: pointer;
+}
+
+.dropdwon {
+  position: relative;
+  display: inline-block;
+}
+
+.algorithms-content {
+  left: 48vh;
+  display: none;
+  position: absolute;
+
+  background-color: rgb(12, 53, 71);
+  width: 150px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  justify-content: space-evenly;
+  height: 150px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.animationSpeed-content {
+  display: none;
+  position: absolute;
+  background-color: rgb(12, 53, 71);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  justify-content: space-evenly;
+  height: 250px;
+  width: 250px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.dropdown-btn {
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  transition: color 0.3s;
+  text-decoration: none;
+  text-align: start;
+  height: 30px;
+  min-width: 100px;
+}
+
+.show {
+  display: flex;
+}
+
+.visualize {
+  font-family: "Roboto Mono", monospace;
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
+  height: 75%;
+  text-align: center;
+  border: 2px solid white;
+  background-color: rgb(12, 53, 71);
+  color: white;
+}
+
+.visualize:hover {
+  transition: background-color 0.3s;
+  background-color: rgb(255, 255, 255);
+  color: rgb(12, 53, 71);
+}
+
+/* END NAVBAR */
+
+/* EXPLANATION SECTION */
+
+p {
+  white-space: nowrap;
+  font-family: "Roboto Mono", monospace;
+}
+
+.explanationSection {
+  height: 10vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.nodes {
+  display: flex;
+  justify-content: center;
+
+  align-items: center;
+}
+
+.pickAlgorithm {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 5px;
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.nodeExplanation {
+  display: flex;
+  font-size: 20px;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0px 4vh;
+}
+
+.visitedNodes {
+  display: flex;
+}
+
+.unvisited-node-explanation {
+  margin-right: 5px;
+  background-color: white;
+  border: 1px solid rgb(175, 216, 248);
+  height: 25px;
+  width: 25px;
+  display: block;
+}
+
+.visited-node-explanation-green {
+  background-color: rgba(0, 190, 218, 0.75);
+
+  height: 28px;
+  width: 28px;
+  display: block;
+  margin-right: 5px;
+}
+
+.visited-node-explanation-purple {
+  margin-right: 5px;
+  background-color: rgba(178, 67, 255, 0.75);
+  height: 28px;
+  width: 28px;
+  display: block;
+}
+
+.shortest-node-explanation {
+  margin-right: 5px;
+  background-color: rgb(255, 254, 106);
+  height: 28px;
+  width: 28px;
+  display: block;
+}
+
+.wall-node-explanation {
+  margin-right: 5px;
+  background-color: rgb(12, 53, 71);
+  height: 28px;
+  width: 28px;
+  display: block;
+}
+
+/* END EXPLANATION SECTION */
+@media only screen and (min-width: 1920px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(75, 2.6vh);
+    grid-template-rows: repeat(31, 2.6vh);
+    min-width: none;
+  }
+}
+
+@media only screen and (min-width: 1660px) and (max-width: 1919px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(75, 2.3vh);
+    grid-template-rows: repeat(31, 2.3vh);
+    min-width: none;
+  }
+}
+
+@media only screen and (min-width: 1410px) and (max-width: 1659px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(75, 2.3vh);
+    grid-template-rows: repeat(31, 2.3vh);
+    min-width: none;
+  }
+}
+
+@media only screen and (max-width: 1409px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(75, 2.3vh);
+    grid-template-rows: repeat(31, 2.3vh);
+    min-width: none;
+  }
+}
+
+@media only screen and (min-width: 1920px) {
+  .grid-not-clickable {
+    display: grid;
+    grid-template-columns: repeat(75, 2.6vh);
+    grid-template-rows: repeat(31, 2.6vh);
+    min-width: none;
+  }
+}
+
+@media only screen and (min-width: 1660px) and (max-width: 1919px) {
+  .grid-not-clickable {
+    display: grid;
+    grid-template-columns: repeat(75, 2.3vh);
+    grid-template-rows: repeat(31, 2.3vh);
+    min-width: none;
+  }
+}
+
+@media only screen and (min-width: 1410px) and (max-width: 1659px) {
+  .grid-not-clickable {
+    display: grid;
+    grid-template-columns: repeat(75, 2.3vh);
+    grid-template-rows: repeat(31, 2.3vh);
+    min-width: none;
+  }
+}
+
+@media only screen and (max-width: 1409px) {
+  .grid-not-clickable {
+    display: grid;
+    grid-template-columns: repeat(75, 2.3vh);
+    grid-template-rows: repeat(31, 2.3vh);
+    min-width: none;
+  }
+}
