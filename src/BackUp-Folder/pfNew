@@ -4,13 +4,11 @@ import { aStarSearch } from "../algorithms/aStarSearch.js";
 import { greedyBestFirstSearch } from "../algorithms/greedyBestFirstSearch.js";
 import { getNodesInShortestPathOrder } from "../algorithms/getNodesInShortestPathOrder.js";
 import { depthFirstSearch } from "../algorithms/depthFirstSearch.js";
-import { breadthFirstSearch } from "../algorithms/breadthFirstSearch.js";
 import { recursiveDivision } from "../algorithms/recursiveDivision.js";
 import Node from "./Node/Node.jsx";
 import "./PathfindingVisualizer.css";
 import "./Node/Node.css";
 
-let startprevNode = "";
 let algorithmDisplayed = "";
 let algorithmDone = false;
 let mouseIsPressed = false;
@@ -35,687 +33,72 @@ let grid = getInitialGrid(
 );
 
 const PathfindingVisualizerFunctionalComponent = () => {
-  console.log("render");
+  console.log(bombNodeRow, bombNodeCol);
+  // try {
+  //   document.getElementById(`node-${bombNodeRow}-${bombNodeCol}`).className =
+  //     "node-bomb";
+  // } catch {}
   const [animationSpeed, setAnmationSpeed] = useState("Fast");
   const [bomb, setBomb] = useState(true);
   const [algorithm, setAlgorithm] = useState("");
-  const [tutorialCounter, setTutorialCounter] = useState(1);
-
-  function tutorialCounterIncrease() {
-    if (tutorialCounter < 9) {
-      setTutorialCounter((prev) => prev + 1);
-    } else {
-      document.getElementById("tutorialNine").style.visibility = "hidden";
-    }
-  }
-
-  function tutorialCounterDecrease() {
-    if (tutorialCounter > 1) {
-      setTutorialCounter((prev) => prev - 1);
-    }
-  }
   return (
     <div>
-      <div className="tutorial-hidden" id="tutorialNine">
-        <div className="tutorialCounter">{tutorialCounter}/9</div>
-
-        <h3>Enjoy!</h3>
-        <h6>
-          I hope you have just as much fun playing around with this
-          visualization tool as I had building it!
-        </h6>
-        <p className="paragraphTutorial">
-          If you want to see the source code for this application, check out my{" "}
-          <a href="https://google.de" target="_blank">
-            github
-          </a>
-          .
-        </p>
-
-        <button
-          className="skipButton"
-          onClick={() => {
-            document.getElementById("tutorialNine").className =
-              "tutorial-hidden";
-            document.getElementById("grid").className = "grid";
-            makeClickable();
-          }}
-        >
-          Skip Tutorial
-        </button>
-        <button
-          className="previousButton"
-          onClick={() => {
-            tutorialCounterDecrease();
-            document.getElementById("tutorialNine").className =
-              "tutorial-hidden";
-            document.getElementById("tutorialEight").className = "tutorial";
-          }}
-        >
-          Previous
-        </button>
-        <button
-          className="nextButton"
-          onClick={() => {
-            tutorialCounterIncrease();
-            document.getElementById("tutorialNine").className =
-              "tutorial-hidden";
-            document.getElementById("grid").className = "grid";
-            makeClickable();
-          }}
-        >
-          Next
-        </button>
-      </div>
-
-      <div className="tutorial-hidden" id="tutorialEight">
-        <div className="tutorialCounter">{tutorialCounter}/9</div>
-
-        <h3>Visualizing and more</h3>
-        <h6>
-          Use the navbar buttons to visualize algorithms and to do other stuff!
-        </h6>
-        <p className="paragraphTutorial">
-          You can clear the current path, clear walls and weights, clear the
-          entire board, and adjust the visualization speed, all from the navbar.
-          If you want to access this tutorial again, click on "Pathfinding
-          Visualizer" in the top left corner of your screen.
-        </p>
-        <img
-          src="https://i.ibb.co/sFRv4KG/nav.png"
-          alt=""
-          className="imageTutorial"
-        />
-
-        <button
-          className="skipButton"
-          onClick={() => {
-            document.getElementById("tutorialEight").className =
-              "tutorial-hidden";
-            document.getElementById("grid").className = "grid";
-            makeClickable();
-          }}
-        >
-          Skip Tutorial
-        </button>
-        <button
-          className="previousButton"
-          onClick={() => {
-            tutorialCounterDecrease();
-            document.getElementById("tutorialEight").className =
-              "tutorial-hidden";
-            document.getElementById("tutorialSeven").className = "tutorial";
-          }}
-        >
-          Previous
-        </button>
-        <button
-          className="nextButton"
-          onClick={() => {
-            tutorialCounterIncrease();
-            document.getElementById("tutorialEight").className =
-              "tutorial-hidden";
-            document.getElementById("tutorialNine").className = "tutorial";
-          }}
-        >
-          Next
-        </button>
-      </div>
-
-      <div className="tutorial-hidden" id="tutorialSeven">
-        <div className="tutorialCounter">{tutorialCounter}/9</div>
-
-        <h3>Dragging nodes</h3>
-        <h6>Click and drag the start, bomb, and target nodes to move them.</h6>
-        <p className="paragraphTutorial">
-          Note that you can drag nodes even after an algorithm has finished
-          running. This will allow you to instantly see different paths.
-        </p>
-        <img
-          src="https://s3.gifyu.com/images/dragging77f0190e061452e4.gif"
-          alt=""
-          className="imageTutorial"
-        />
-
-        <button
-          className="skipButton"
-          onClick={() => {
-            document.getElementById("tutorialSeven").className =
-              "tutorial-hidden";
-            document.getElementById("grid").className = "grid";
-            makeClickable();
-          }}
-        >
-          Skip Tutorial
-        </button>
-        <button
-          className="previousButton"
-          onClick={() => {
-            tutorialCounterDecrease();
-            document.getElementById("tutorialSeven").className =
-              "tutorial-hidden";
-            document.getElementById("tutorialSix").className = "tutorial";
-          }}
-        >
-          Previous
-        </button>
-        <button
-          className="nextButton"
-          onClick={() => {
-            tutorialCounterIncrease();
-            document.getElementById("tutorialSeven").className =
-              "tutorial-hidden";
-            document.getElementById("tutorialEight").className = "tutorial";
-          }}
-        >
-          Next
-        </button>
-      </div>
-
-      <div className="tutorial-hidden" id="tutorialSix">
-        <div className="tutorialCounter">{tutorialCounter}/9</div>
-
-        <h3>Adding a bomb</h3>
-        <h6>Click the "Add Bomb" button.</h6>
-        <p className="paragraphTutorial">
-          Adding a bomb will change the course of the chosen algorithm. In other
-          words, the algorithm will first look for the bomb (in an effort to
-          diffuse it) and will then look for the target node. Note that the
-          Bidirectional Swarm Algorithm does not support adding a bomb.
-        </p>
-        <img
-          src="https://i.ibb.co/vQPnf0t/bomb.png"
-          alt=""
-          className="imageTutorial"
-        />
-
-        <button
-          className="skipButton"
-          onClick={() => {
-            document.getElementById("tutorialSix").className =
-              "tutorial-hidden";
-            document.getElementById("grid").className = "grid";
-            makeClickable();
-          }}
-        >
-          Skip Tutorial
-        </button>
-        <button
-          className="previousButton"
-          onClick={() => {
-            tutorialCounterDecrease();
-            document.getElementById("tutorialSix").className =
-              "tutorial-hidden";
-            document.getElementById("tutorialFive").className = "tutorial";
-          }}
-        >
-          Previous
-        </button>
-        <button
-          className="nextButton"
-          onClick={() => {
-            tutorialCounterIncrease();
-            document.getElementById("tutorialSix").className =
-              "tutorial-hidden";
-            document.getElementById("tutorialSeven").className = "tutorial";
-          }}
-        >
-          Next
-        </button>
-      </div>
-
-      <div className="tutorial-hidden" id="tutorialFive">
-        <div className="tutorialCounter">{tutorialCounter}/9</div>
-
-        <h3>Adding walls</h3>
-        <h6>Click on the grid to add a wall.</h6>
-        <p className="paragraphTutorial">
-          Walls are impenetrable, meaning that a path cannot cross through them.
-        </p>
-        <img
-          src="https://i.ibb.co/zHnMSkr/addWalls.gif"
-          alt=""
-          className="imageTutorial"
-        />
-
-        <button
-          className="skipButton"
-          onClick={() => {
-            document.getElementById("tutorialFive").className =
-              "tutorial-hidden";
-            document.getElementById("grid").className = "grid";
-            makeClickable();
-          }}
-        >
-          Skip Tutorial
-        </button>
-        <button
-          className="previousButton"
-          onClick={() => {
-            tutorialCounterDecrease();
-            document.getElementById("tutorialFive").className =
-              "tutorial-hidden";
-            document.getElementById("tutorialFour").className = "tutorial";
-          }}
-        >
-          Previous
-        </button>
-        <button
-          className="nextButton"
-          onClick={() => {
-            tutorialCounterIncrease();
-            document.getElementById("tutorialFive").className =
-              "tutorial-hidden";
-            document.getElementById("tutorialSix").className = "tutorial";
-          }}
-        >
-          Next
-        </button>
-      </div>
-
-      <div className="tutorial-hidden" id="tutorialFour">
-        <div className="tutorialCounter">{tutorialCounter}/9</div>
-
-        <h3>Meet the algorithms</h3>
-        <h6>Not all algorithms are created equal.</h6>
-        <p className="paragraphTutorial">
-          <div>
-            <p className="algorithmTutorial" style={{ paddingTop: "5px" }}>
-              <strong>Dijkstra's Algorithm </strong>(weighted): the father of
-              pathfinding algorithms, guarantees the shortest path
-            </p>
-            <p> </p>
-          </div>
-
-          <div>
-            <p className="algorithmTutorial">
-              <strong>A* Search</strong>(weighted): arguably the best
-              pathfinding algorithm, uses heuristics to guarantee the shortest
-              path much faster than Dijkstra's Algorithm
-            </p>
-          </div>
-
-          <div>
-            <p className="algorithmTutorial">
-              <strong>Greedy Best-first Search</strong>(weighted): a faster,
-              more heuristic-heavy version of A*, does not guarantee the
-              shortest path
-            </p>
-          </div>
-
-          <div>
-            <p className="algorithmTutorial">
-              <strong>Breath-first Search</strong>(unweighted): a great
-              algorithm, guarantees the shortest path
-            </p>
-          </div>
-
-          <div>
-            <p className="algorithmTutorial">
-              <strong>Depth-first Search</strong>(unweighted): a very bad
-              algorithm for pathfinding, does not guarantee the shortest path
-            </p>
-          </div>
-        </p>
-
-        <button
-          className="skipButton"
-          onClick={() => {
-            document.getElementById("tutorialFour").className =
-              "tutorial-hidden";
-            document.getElementById("grid").className = "grid";
-            makeClickable();
-          }}
-        >
-          Skip Tutorial
-        </button>
-        <button
-          className="previousButton"
-          onClick={() => {
-            tutorialCounterDecrease();
-            document.getElementById("tutorialFour").className =
-              "tutorial-hidden";
-            document.getElementById("tutorialThree").className = "tutorial";
-          }}
-        >
-          Previous
-        </button>
-        <button
-          className="nextButton"
-          onClick={() => {
-            tutorialCounterIncrease();
-            document.getElementById("tutorialFour").className =
-              "tutorial-hidden";
-            document.getElementById("tutorialFive").className = "tutorial";
-          }}
-        >
-          Next
-        </button>
-      </div>
-
-      <div className="tutorial-hidden" id="tutorialThree">
-        <div className="tutorialCounter">{tutorialCounter}/9</div>
-
-        <h3>Picking an algorithm</h3>
-        <h6>Choose an algorithm from the "Algorithms" drop-down menu.</h6>
-        <p className="paragraphTutorial">
-          Note that some algorithms are unweighted, while others are weighted.
-          Unweighted algorithms do not take turns or weight nodes into account,
-          whereas weighted ones do. Additionally, not all algorithms guarantee
-          the shortest path.
-        </p>
-        <img
-          src="https://i.ibb.co/f2zTpHQ/algos.png"
-          alt=""
-          className="imageTutorial"
-        />
-
-        <button
-          className="skipButton"
-          onClick={() => {
-            document.getElementById("tutorialThree").className =
-              "tutorial-hidden";
-            document.getElementById("grid").className = "grid";
-            makeClickable();
-          }}
-        >
-          Skip Tutorial
-        </button>
-        <button
-          className="previousButton"
-          onClick={() => {
-            tutorialCounterDecrease();
-            document.getElementById("tutorialThree").className =
-              "tutorial-hidden";
-            document.getElementById("tutorialTwo").className = "tutorial";
-          }}
-        >
-          Previous
-        </button>
-        <button
-          className="nextButton"
-          onClick={() => {
-            tutorialCounterIncrease();
-            document.getElementById("tutorialThree").className =
-              "tutorial-hidden";
-            document.getElementById("tutorialFour").className = "tutorial";
-          }}
-        >
-          Next
-        </button>
-      </div>
-
-      <div className="tutorial-hidden" id="tutorialTwo">
-        <div className="tutorialCounter">{tutorialCounter}/9</div>
-
-        <h3>What is a pathfinding algorithm?</h3>
-        <h6>
-          At its core, a pathfinding algorithm seeks to find the shortest path
-          between two points. This application visualizes various pathfinding
-          algorithms in action, and more!
-        </h6>
-        <p className="paragraphTutorial">
-          All of the algorithms on this application are adapted for a 2D grid,
-          where 90 degree turns have a "cost" of 1 and movements from a node to
-          another have a "cost" of 1.
-        </p>
-        <img
-          src="https://i.ibb.co/dBxK3WN/path.png"
-          alt=""
-          className="imageTutorial"
-        />
-
-        <button
-          className="skipButton"
-          onClick={() => {
-            document.getElementById("tutorialTwo").className =
-              "tutorial-hidden";
-            document.getElementById("grid").className = "grid";
-            makeClickable();
-          }}
-        >
-          Skip Tutorial
-        </button>
-        <button
-          className="previousButton"
-          onClick={() => {
-            tutorialCounterDecrease();
-            document.getElementById("tutorialTwo").className =
-              "tutorial-hidden";
-            document.getElementById("tutorialOne").className = "tutorial";
-          }}
-        >
-          Previous
-        </button>
-        <button
-          className="nextButton"
-          onClick={() => {
-            tutorialCounterIncrease();
-            document.getElementById("tutorialTwo").className =
-              "tutorial-hidden";
-            document.getElementById("tutorialThree").className = "tutorial";
-          }}
-        >
-          Next
-        </button>
-      </div>
-
-      <div className="tutorial" id="tutorialOne">
-        <div className="tutorialCounter">{tutorialCounter}/9</div>
-
-        <h3>Welcome to Pathfinding Visualizer!</h3>
-        <h6>
-          This short tutorial will walk you through all of the features of this
-          application.
-        </h6>
-        <p className="paragraphTutorial">
-          If you want to dive right in, feel free to press the "Skip Tutorial"
-          button below. Otherwise, press "Next"!
-        </p>
-        <img
-          src="https://i.ibb.co/Fgx4FgN/c-icon.png"
-          alt=""
-          className="imageTutorialOne"
-        />
-
-        <button
-          className="skipButton"
-          onClick={() => {
-            document.getElementById("tutorialOne").style.visibility = "hidden";
-            document.getElementById("grid").className = "grid";
-            makeClickable();
-          }}
-        >
-          Skip Tutorial
-        </button>
-        <button className="previousButton">Previous</button>
-        <button
-          className="nextButton"
-          onClick={() => {
-            tutorialCounterIncrease();
-            document.getElementById("tutorialOne").className =
-              "tutorial-hidden";
-            document.getElementById("tutorialTwo").className = "tutorial";
-          }}
-        >
-          Next
-        </button>
-      </div>
-
-      {/* // */}
-      {/* // */}
-      {/* // */}
-      {/* // */}
-      {/* // */}
-      {/* // */}
-      {/* // */}
-      {/* // */}
-      {/* // */}
-      {/* // */}
-
-      <div className="navBar" id="navBar">
+      <ul class="menu cf">
         <a
           href="./PathfindingVisualizerFunctionalComponent.jsx"
           className="homeButton"
         >
           PathfindingVisualizer
         </a>
-
-        <ul className="menu cf click" id="click">
-          <li>
-            <a>Algorithms ▼</a>
-            <ul class="submenu" id="submenu">
-              <li>
-                <a
-                  onClick={() => {
-                    algorithmDisplayed = "Dijkstra´s";
-                    setAlgorithm("dijkstra");
-                  }}
-                >
-                  Dijkstra`s Algorithm
-                </a>
-              </li>
-              <li>
-                <a
-                  onClick={() => {
-                    setAlgorithm("aStar");
-                    algorithmDisplayed = "A*";
-                  }}
-                >
-                  A* Search
-                </a>
-              </li>
-              <li>
-                <a
-                  onClick={() => {
-                    setAlgorithm("greedy");
-                    algorithmDisplayed = "Greedy";
-                  }}
-                >
-                  Greedy Best First Search
-                </a>
-              </li>
-              <li>
-                <a
-                  onClick={() => {
-                    setAlgorithm("breadth");
-                    algorithmDisplayed = "BFS";
-                  }}
-                >
-                  Breadth-first Search
-                </a>
-              </li>
-              <li>
-                <a
-                  onClick={() => {
-                    setAlgorithm("depth");
-                    algorithmDisplayed = "DFS";
-                  }}
-                >
-                  Depth-first Search
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-
-        <button
-          id="click1"
-          className="click"
-          onClick={() => {
-            bombNodeRow = 15;
-            bombNodeCol = 37;
-            setBomb(!bomb);
-            const newGrid = changeBomb(grid, bombNodeRow, bombNodeCol, bomb);
-            grid = newGrid;
-            isBombActive = !isBombActive;
-            bombDisplay =
-              bombDisplay === "Add a bomb" ? "Remove bomb" : "Add a bomb";
-            if (!isBombActive) {
-              grid = getGrid(
-                startNodeRow,
-                startNodeCol,
-                finishNodeRow,
-                finishNodeCol
-              );
-              resetGrid();
-            }
-          }}
-        >
-          {bombDisplay}
-        </button>
-        <button
-          id="click2"
-          className="visualize click"
-          onClick={() => {
-            if (algorithm === "") return;
-            document.getElementById("grid").className = "grid-not-clickable";
-            document.getElementById("click").style.pointerEvents = "none";
-            document.getElementById("click1").style.pointerEvents = "none";
-            document.getElementById("click2").style.pointerEvents = "none";
-            document.getElementById("click3").style.pointerEvents = "none";
-            document.getElementById("click4").style.pointerEvents = "none";
-            document.getElementById("click5").style.pointerEvents = "none";
-            document.getElementById("click6").style.pointerEvents = "none";
-            makeAlgorithm(algorithm, animationSpeed);
-          }}
-        >
-          Visualize {algorithmDisplayed}
-        </button>
-        <button id="click3" className="click">
-          Clear Bord
-        </button>
-        <button
-          id="click4"
-          className="click"
-          onClick={() => {
-            clearPath();
-            clearWalls();
-            resetGrid();
-            this.forceUpdate();
-          }}
-        >
-          Clear walls
-        </button>
-        <button id="click5" className="click" onClick={clearPath}>
-          Clear Path
-        </button>
-
-        <ul id="click6" className="menu cf click">
-          <li>
-            <a>Speed: {animationSpeed} ▼</a>
-            <ul class="submenu-speed">
-              <li>
-                <a
-                  onClick={() => {
-                    setAnmationSpeed("Fast");
-                  }}
-                >
-                  Fast
-                </a>
-              </li>
-              <li>
-                <a
-                  onClick={() => {
-                    setAnmationSpeed("Average");
-                  }}
-                >
-                  Average
-                </a>
-              </li>
-              <li>
-                <a
-                  onClick={() => {
-                    setAnmationSpeed("Slow");
-                  }}
-                >
-                  Slow
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+        <li>
+          <a href="">Algorithms</a>
+          <ul class="submenu">
+            <li className="sub">
+              <a href="">Submenu item</a>
+            </li>
+            <li className="sub">
+              <a href="">Submenu item</a>
+            </li>
+            <li className="sub">
+              <a href="">Submenu item</a>
+            </li>
+            <li className="sub">
+              <a href="">Submenu item</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="">{bombDisplay}</a>
+        </li>
+        <li className="visualize">
+          <a href="" className="visualize">
+            Visualize
+          </a>
+        </li>
+        <li>
+          <a href="">Clear Bord</a>
+        </li>
+        <li>
+          <a href="">Clear Walls</a>
+        </li>
+        <li>
+          <a href="">Clear Path</a>
+        </li>
+        <li>
+          <a href="">Speed: {animationSpeed}</a>
+          <ul class="submenu">
+            <li className="sub">
+              <a href="">Fast</a>
+            </li>
+            <li className="sub">
+              <a href="">Average</a>
+            </li>
+            <li className="sub">
+              <a href="">Slow</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
 
       <div className="explanationSection">
         <div className="nodes">
@@ -740,7 +123,10 @@ const PathfindingVisualizerFunctionalComponent = () => {
             />
             <p className="node-description"> Bomb Node</p>
           </div>
-
+          <div className="nodeExplanation">
+            <img src="https://svgshare.com/i/Wjd.svg" alt="startNode" />
+            <p className="node-description"> Weigth Node</p>
+          </div>
           <div className="nodeExplanation">
             <div className="unvisited-node-explanation"></div>
             <p> Unvisited Node</p>
@@ -762,9 +148,9 @@ const PathfindingVisualizerFunctionalComponent = () => {
             <p> Wall Node</p>
           </div>
         </div>
+        {/* <div className="pickAlgorithm">Pick an algorithm to visualize it!</div> */}
       </div>
-
-      <div className="grid-not-clickable" id="grid">
+      <div className="grid" id="grid">
         {grid.map((row) => {
           return row.map((node) => {
             const { row, col, isFinish, isStart, isWall, isBomb } = node;
@@ -797,16 +183,6 @@ const PathfindingVisualizerFunctionalComponent = () => {
   );
 };
 
-export function makeClickable() {
-  document.getElementById("click").classList.remove("click");
-  document.getElementById("click1").classList.remove("click");
-  document.getElementById("click2").classList.remove("click");
-  document.getElementById("click3").classList.remove("click");
-  document.getElementById("click4").classList.remove("click");
-  document.getElementById("click5").classList.remove("click");
-  document.getElementById("click6").classList.remove("click");
-}
-
 export function clearBord() {
   algorithmDone = false;
   startNodeRow = 15;
@@ -835,19 +211,19 @@ export function clearBord() {
   }
   grid = newGrid;
 
-  // for (let row = 0; row < grid.length; row++) {
-  //   for (let col = 0; col < grid[row].length; col++) {
-  //     const nodeCopy = grid[row][col];
-  //     const node = document.getElementById(`node-${row}-${col}`);
+  for (let row = 0; row < grid.length; row++) {
+    for (let col = 0; col < grid[row].length; col++) {
+      const nodeCopy = grid[row][col];
+      const node = document.getElementById(`node-${row}-${col}`);
 
-  //     node.className = "node";
+      node.className = "node";
 
-  //     if (row === startNodeRow && col === startNodeCol)
-  //       node.className = "node-start";
-  //     if (row === finishNodeRow && col === finishNodeCol)
-  //       node.className = "node-finish";
-  //   }
-  // }
+      if (row === startNodeRow && col === startNodeCol)
+        node.className = "node-start";
+      if (row === finishNodeRow && col === finishNodeCol)
+        node.className = "node-finish";
+    }
+  }
 }
 
 export function clearPath() {
@@ -858,14 +234,83 @@ export function clearPath() {
 
 export function clearWalls() {
   algorithmDone = false;
-  grid = getGridClearWalls(
-    startNodeRow,
-    startNodeCol,
-    finishNodeRow,
-    finishNodeCol,
-    bombNodeRow,
-    bombNodeCol
-  );
+  grid = getGrid(startNodeRow, startNodeCol, finishNodeRow, finishNodeCol);
+  makeGridOnFirstRender();
+}
+
+export function makeRecursiveDivision(aSpeed) {
+  let animationSpeed;
+  if (aSpeed === "Fast") {
+    animationSpeed = 10;
+  } else if (aSpeed === "Average") {
+    animationSpeed = 50;
+  } else {
+    animationSpeed = 80;
+  }
+  getInitialGrid(startNodeRow, startNodeCol, finishNodeRow, finishNodeCol);
+  makeGridOnFirstRender();
+  const gridToAnimate = [];
+  for (let row = 0; row < grid.length; row++) {
+    for (let col = 0; col < grid[row].length; col++) {
+      const node = grid[row][col];
+      if (!node.isStart && !node.isFinish && row === 0) {
+        node.isWall = true;
+        gridToAnimate.push(node);
+      } else if (!node.isStart && !node.isFinish && col === 0 && row !== 0) {
+        node.isWall = true;
+        gridToAnimate.push(node);
+      } else if (!node.isStart && !node.isFinish && col === 74 && row !== 0) {
+        node.isWall = true;
+        gridToAnimate.push(node);
+      } else if (
+        !node.isStart &&
+        !node.isFinish &&
+        col !== 75 &&
+        col !== 0 &&
+        row === 30
+      ) {
+        node.isWall = true;
+        gridToAnimate.push(node);
+      }
+    }
+  }
+  recursiveDivision(grid);
+  for (let i = 0; i < gridToAnimate.length; i++) {
+    setTimeout(() => {
+      const node = gridToAnimate[i];
+      document.getElementById(`node-${node.row}-${node.col}`).className =
+        "node-wall";
+    }, i * animationSpeed);
+  }
+}
+
+export function basicRandomMaze() {
+  resetGrid();
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[i].length; j++) {
+      if (!grid[i][j].isStart && !grid[i][j].isFinish) {
+        const wall = Math.random();
+        if (wall < 0.3) {
+          eventFire(document.getElementById(`node-${i}-${j}`), "mousedown");
+          eventFire(document.getElementById(`node-${i}-${j}`), "mouseup");
+          grid[i][j].isWall = true;
+        } else {
+          grid[i][j].isWall = false;
+          document.getElementById(`node-${i}-${j}`).className = "node";
+        }
+      }
+    }
+  }
+}
+
+function eventFire(el, etype) {
+  if (el.fireEvent) {
+    el.fireEvent("on" + etype);
+  } else {
+    var evObj = document.createEvent("Events");
+    evObj.initEvent(etype, true, false);
+    el.dispatchEvent(evObj);
+  }
 }
 
 export default PathfindingVisualizerFunctionalComponent;
@@ -987,39 +432,6 @@ export function getGrid(
   return newGrid;
 }
 
-export function getGridClearWalls(
-  startNodeRow,
-  startNodeCol,
-  finishNodeRow,
-  finishNodeCol,
-  bombNodeRow,
-  bombNodeCol
-) {
-  const newGrid = [];
-  for (let i = 0; i < grid.length; i++) {
-    let row = [];
-    for (let j = 0; j < grid[i].length; j++) {
-      const node = grid[i][j];
-
-      row.push(
-        createNewNode(
-          i,
-          j,
-          startNodeRow,
-          startNodeCol,
-          finishNodeRow,
-          finishNodeCol,
-          false,
-          bombNodeRow,
-          bombNodeCol
-        )
-      );
-    }
-    newGrid.push(row);
-  }
-  return newGrid;
-}
-
 export function getInitialGrid(
   startNodeRow,
   startNodeCol,
@@ -1071,15 +483,15 @@ export function resetGrid() {
 export function makeGridOnFirstRender() {
   for (let row = 0; row < grid.length; row++) {
     for (let col = 0; col < grid[row].length; col++) {
-      const nodeCopy = grid[row][col];
       const node = document.getElementById(`node-${row}-${col}`);
+
       node.className = "node";
 
       if (row === startNodeRow && col === startNodeCol)
         node.className = "node-start";
       if (row === finishNodeRow && col === finishNodeCol)
         node.className = "node-finish";
-      if (row === bombNodeRow && col === bombNodeCol && isBombActive)
+      if (row === bombNodeRow && col === bombNodeCol)
         node.className = "node-bomb";
     }
   }
@@ -1121,8 +533,6 @@ export function makeAlgorithm(algorithm, aSpeed) {
       visitedNodesInOrder = greedyBestFirstSearch(grid, startNode, finishNode);
     } else if (algorithm === "depth") {
       visitedNodesInOrder = depthFirstSearch(grid, startNode, finishNode);
-    } else if (algorithm === "breadth") {
-      visitedNodesInOrder = breadthFirstSearch(grid, startNode, finishNode);
     }
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
     animate(
@@ -1153,11 +563,6 @@ export function makeAlgorithm(algorithm, aSpeed) {
       nodesInShortestPathOrder = getNodesInShortestPathOrder(bomb);
       gridAfterBomb();
       visitedNodesInOrderTwo = depthFirstSearch(grid, bomb, finishNode);
-    } else if (algorithm === "breadth") {
-      visitedNodesInOrder = breadthFirstSearch(grid, startNode, bomb);
-      nodesInShortestPathOrder = getNodesInShortestPathOrder(bomb);
-      gridAfterBomb();
-      visitedNodesInOrderTwo = breadthFirstSearch(grid, bomb, finishNode);
     }
 
     const nodesInShortestPathOrderTwo = getNodesInShortestPathOrder(finishNode);
@@ -1249,15 +654,9 @@ export function animateShortestPathWithBomb(
                 ).className = "node-shortest-path-pre-up";
               }
             }
-
             document.getElementById(
               `node-${nodeTwo.row}-${nodeTwo.col}`
             ).className = "node-shortest-path";
-            if (nodesInShortestPathOrderTwo[j].isStart) {
-              document.getElementById(
-                `node-${nodeTwo.row}-${nodeTwo.col}`
-              ).className = "node-shortest-path-start";
-            }
           }, j * shortestPathSpeed);
           if (j === nodesInShortestPathOrderTwo.length - 1) {
             const node = nodesInShortestPathOrderTwo[j];
@@ -1267,13 +666,6 @@ export function animateShortestPathWithBomb(
               ).className = "node-shortest-path-finish";
               algorithmDone = true;
               document.getElementById("grid").className = "grid";
-              document.getElementById("click").style.pointerEvents = "all";
-              document.getElementById("click1").style.pointerEvents = "all";
-              document.getElementById("click2").style.pointerEvents = "all";
-              document.getElementById("click3").style.pointerEvents = "all";
-              document.getElementById("click4").style.pointerEvents = "all";
-              document.getElementById("click5").style.pointerEvents = "all";
-              document.getElementById("click6").style.pointerEvents = "all";
             }, j * shortestPathSpeed);
           }
         }
@@ -1317,22 +709,11 @@ export function animateSecond(
         document.getElementById(`node-${node.row}-${node.col}`).className =
           "node-visited-finish";
       }, animationSpeed * i);
-    } else if (
-      !(
-        visitedNodesInOrder[i].row === startNodeRow &&
-        visitedNodesInOrder[i].col === startNodeCol
-      )
-    ) {
-      setTimeout(() => {
-        const node = visitedNodesInOrder[i];
-        document.getElementById(`node-${node.row}-${node.col}`).className =
-          "node-visited";
-      }, animationSpeed * i);
     } else {
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
         document.getElementById(`node-${node.row}-${node.col}`).className =
-          "node-visited-start";
+          "node-visited";
       }, animationSpeed * i);
     }
   }
@@ -1376,22 +757,21 @@ export function animateWithBomb(
         document.getElementById(`node-${node.row}-${node.col}`).className =
           "bomb-node-visited";
       }, animationSpeed * i);
-    } else if (
-      !(
-        visitedNodesInOrder[i].row === finishNodeRow &&
-        visitedNodesInOrder[i].col === finishNodeCol
-      )
-    ) {
-      setTimeout(() => {
+      if (
+        document.getElementById(
+          `node-${visitedNodesInOrder[i].row}-${visitedNodesInOrder[i].col}`
+        ).className === "node-finish"
+      ) {
+        console.log("y");
         const node = visitedNodesInOrder[i];
         document.getElementById(`node-${node.row}-${node.col}`).className =
-          "node-visited-bomb";
-      }, animationSpeed * i);
+          "node-visited-finish-bomb";
+      }
     } else {
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
         document.getElementById(`node-${node.row}-${node.col}`).className =
-          "node-visited-finish-bomb";
+          "node-visited-bomb";
       }, animationSpeed * i);
     }
   }
@@ -1473,13 +853,6 @@ export function animateShortestPath(
           "node-shortest-path-finish";
         algorithmDone = true;
         document.getElementById("grid").className = "grid";
-        document.getElementById("click").style.pointerEvents = "all";
-        document.getElementById("click1").style.pointerEvents = "all";
-        document.getElementById("click2").style.pointerEvents = "all";
-        document.getElementById("click3").style.pointerEvents = "all";
-        document.getElementById("click4").style.pointerEvents = "all";
-        document.getElementById("click5").style.pointerEvents = "all";
-        document.getElementById("click6").style.pointerEvents = "all";
       }, shortestPathSpeed * i);
     } else {
       setTimeout(() => {
@@ -1547,10 +920,6 @@ export function displayAlgorithmAfterwards() {
       animateAfter(visitedNodesInOrder, nodesInShortestPathOrder);
     } else if (algorithmDisplayed === "DFS") {
       visitedNodesInOrder = depthFirstSearch(grid, startNode, finishNode);
-      const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-      animateAfter(visitedNodesInOrder, nodesInShortestPathOrder);
-    } else if (algorithmDisplayed === "BFS") {
-      visitedNodesInOrder = breadthFirstSearch(grid, startNode, finishNode);
       const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
       animateAfter(visitedNodesInOrder, nodesInShortestPathOrder);
     }
@@ -1623,23 +992,6 @@ export function displayAlgorithmAfterwards() {
         nodesInShortestPathOrder,
         nodesInShortestPathOrderTwo
       );
-    } else if (algorithmDisplayed === "BFS") {
-      const visitedNodesInOrder = breadthFirstSearch(grid, startNode, bombNode);
-      const nodesInShortestPathOrder = getNodesInShortestPathOrder(bombNode);
-      gridAfterBomb();
-      const visitedNodesInOrderTwo = breadthFirstSearch(
-        grid,
-        bombNode,
-        finishNode
-      );
-      const nodesInShortestPathOrderTwo =
-        getNodesInShortestPathOrder(finishNode);
-      animateAfterBomb(
-        visitedNodesInOrder,
-        visitedNodesInOrderTwo,
-        nodesInShortestPathOrder,
-        nodesInShortestPathOrderTwo
-      );
     }
   }
 }
@@ -1685,6 +1037,13 @@ export function animateAfterBomb(
 }
 
 export function animateAfter(visitedNodesInOrder, nodesInShortestPathOrder) {
+  for (let i = 0; i < visitedNodesInOrder.length; i++) {
+    const node = visitedNodesInOrder[i];
+
+    document.getElementById(`node-${node.row}-${node.col}`).className =
+      "node-afterwards";
+  }
+  animateShortestPathAfter(nodesInShortestPathOrder);
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
       if (
@@ -1698,32 +1057,28 @@ export function animateAfter(visitedNodesInOrder, nodesInShortestPathOrder) {
       }
     }
   }
-
-  for (let i = 0; i < visitedNodesInOrder.length; i++) {
-    const node = visitedNodesInOrder[i];
-    if (!nodesInShortestPathOrder.includes(node))
-      document.getElementById(`node-${node.row}-${node.col}`).className =
-        "node-afterwards";
-  }
-  animateShortestPathAfter(nodesInShortestPathOrder);
 }
 
 export function animateShortestPathAfter(nodesInShortestPathOrder) {
   nodesInShortestPathOrder.shift();
 
-  for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
-    const node = nodesInShortestPathOrder[i];
-    document.getElementById(`node-${node.row}-${node.col}`).className =
-      "shortest-path-afterwards";
-  }
+  const node = nodesInShortestPathOrder[0];
+  const prevNode = nodesInShortestPathOrder[1];
 
-  let node = nodesInShortestPathOrder[0];
   document.getElementById(`node-${node.row}-${node.col}`).className =
     "node-shortest-path-pre-right";
 
-  node = nodesInShortestPathOrder[nodesInShortestPathOrder.length - 1];
-  document.getElementById(`node-${node.row}-${node.col}`).className =
-    "node-shortest-path-finish-after";
+  for (let i = 1; i < nodesInShortestPathOrder.length; i++) {
+    const node = nodesInShortestPathOrder[i];
+    document.getElementById(`node-${node.row}-${node.col}`).className =
+      "shortest-path-afterwards";
+
+    if (i === nodesInShortestPathOrder.length - 1) {
+      const node = nodesInShortestPathOrder[i];
+      document.getElementById(`node-${node.row}-${node.col}`).className =
+        "node-shortest-path-finish-after";
+    }
+  }
 }
 
 export function animateShortestPathAfterWithBomb(
@@ -1802,9 +1157,6 @@ export function handleMouseLeave(row, col) {
   if (mouseOnStart) {
     const newGrid = deleteStart(grid, row, col);
     grid = newGrid;
-    if (algorithmDone) {
-      startprevNode = grid[row][col];
-    }
   } else if (mouseOnFinish) {
     const newGrid = deleteFinish(grid, row, col);
     grid = newGrid;

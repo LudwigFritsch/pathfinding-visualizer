@@ -22,26 +22,10 @@
   font-family: "Lato", Helvetica, Arial, sans-serif;
 }
 
-.tutorial-hidden {
-  visibility: hidden;
-  position: absolute;
-  z-index: 3;
-  background-color: rgba(255, 255, 255, 1);
-  width: 50%;
-  height: 70%;
-  border: 2px solid rgb(12, 53, 71);
-  border-radius: 4px;
-  text-align: center;
-  float: right;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  font-family: "Lato", Helvetica, Arial, sans-serif;
+.btoon {
+  width: 50px;
+  height: 30px;
+  background-color: hotpink;
 }
 
 .tutorialCounter {
@@ -69,8 +53,8 @@
   font-size: 24px;
   font-weight: normal;
   margin-bottom: 5px;
-  margin-block-start: 1em;
-  margin-block-end: 1.4em;
+  margin-block-start: 1.2em;
+  margin-block-end: 0.9em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
 }
@@ -90,8 +74,8 @@
 }
 
 .skipButton {
-  color: white;
-  background-color: rgba(0, 190, 218, 0.75);
+  color: #ffffff;
+  background-color: rgba(173, 38, 38, 0.75);
   position: absolute;
   left: 2%;
   bottom: 2%;
@@ -101,14 +85,8 @@
   font-weight: 500;
 }
 
-/* .skipButton:hover {
-  color: rgb(12, 53, 71);
-  background-color: white;
-  border: 2px solid rgb(12, 53, 71);
-} */
-
 .previousButton {
-  color: #ffffff;
+  color: black;
   background-color: rgba(0, 190, 218, 0.75);
   position: absolute;
   right: 15%;
@@ -120,7 +98,7 @@
 }
 
 .nextButton {
-  color: #ffffff;
+  color: black;
   background-color: rgba(0, 190, 218, 0.75);
   position: absolute;
   right: 2%;
@@ -129,30 +107,6 @@
   width: 100px;
   font-family: inherit;
   font-weight: 500;
-}
-
-.imageTutorial {
-  padding-top: 5px;
-  vertical-align: middle;
-}
-
-.imageTutorialOne {
-  padding-top: 5px;
-  vertical-align: middle;
-}
-
-.paragraphTutorial {
-  white-space: pre-wrap;
-}
-
-.algorithmTutorial {
-  white-space: pre-wrap;
-  margin-bottom: 18px;
-  font-size: 19px;
-}
-
-.algorithmTutorialAlgo {
-  font-weight: 600;
 }
 
 /* NAVBAR */
@@ -177,10 +131,6 @@
   min-width: 100px;
 }
 
-.click {
-  pointer-events: none;
-}
-
 .navBar-not-clickable {
   pointer-events: none;
   height: 5.5vh;
@@ -201,10 +151,10 @@
   color: whitesmoke;
   transition: color 0.2s;
   text-decoration: none;
-  font-size: 28px;
+  font-size: 22px;
   line-height: 1.42;
   font-weight: 700;
-  padding-left: 10px;
+  padding: 0px 21px;
 }
 
 .homeButton:hover {
@@ -219,7 +169,7 @@ button {
   justify-content: center; /* align horizontal */
   align-items: center; /* align vertical */
   height: 75%;
-  font-size: 15px;
+  font-size: 14px;
   padding: 0px 21px;
   line-height: 6vh;
   font-weight: 700;
@@ -272,7 +222,7 @@ button:hover {
 }
 
 .dropdown-btn {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   color: white;
   transition: color 0.3s;
@@ -347,7 +297,7 @@ button:hover {
   display: block;
   color: #fff;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .menu li:hover {
@@ -559,7 +509,6 @@ p {
 /* END EXPLANATION SECTION */
 @media only screen and (min-width: 1920px) {
   .grid {
-    user-select: none;
     display: grid;
     grid-template-columns: repeat(75, 2.6vh);
     grid-template-rows: repeat(31, 2.6vh);
@@ -569,7 +518,6 @@ p {
 
 @media only screen and (min-width: 1660px) and (max-width: 1919px) {
   .grid {
-    user-select: none;
     display: grid;
     grid-template-columns: repeat(75, 2.3vh);
     grid-template-rows: repeat(31, 2.3vh);
@@ -579,7 +527,6 @@ p {
 
 @media only screen and (min-width: 1410px) and (max-width: 1659px) {
   .grid {
-    user-select: none;
     display: grid;
     grid-template-columns: repeat(75, 2.3vh);
     grid-template-rows: repeat(31, 2.3vh);
@@ -589,7 +536,6 @@ p {
 
 @media only screen and (max-width: 1409px) {
   .grid {
-    user-select: none;
     display: grid;
     grid-template-columns: repeat(75, 2.3vh);
     grid-template-rows: repeat(31, 2.3vh);

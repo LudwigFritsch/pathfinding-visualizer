@@ -1,10 +1,10 @@
 export function dijkstra(grid, startNode, endNode) {
   const visitedNodesInOrder = [];
-  const unvisitedNodes = getGrid(grid);
+  let unvisitedNodes = getGrid(grid);
   startNode.distance = 0;
 
   while (!!unvisitedNodes.length) {
-    sortNodesByDistance(unvisitedNodes);
+    unvisitedNodes = sortNodesByDistance(unvisitedNodes);
     const curNode = unvisitedNodes.shift();
     if (curNode.isWall && curNode !== startNode && curNode !== endNode)
       continue;
@@ -19,7 +19,18 @@ export function dijkstra(grid, startNode, endNode) {
 }
 
 export function sortNodesByDistance(unvisitedNodes) {
-  unvisitedNodes.sort((a, b) => a.distance - b.distance);
+  const toCompare = [];
+  const notCompare = [];
+  for (let i = 0; i < unvisitedNodes.length; i++) {
+    if (unvisitedNodes[i].distance !== "Infinity") {
+      toCompare.push(unvisitedNodes[i]);
+    } else {
+      notCompare.push(unvisitedNodes[i]);
+    }
+  }
+  toCompare.sort((a, b) => a.distance - b.distance);
+  const result = toCompare.concat(notCompare);
+  return result;
 }
 
 export function updateNeighbors(node, grid) {

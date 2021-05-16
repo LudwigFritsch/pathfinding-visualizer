@@ -88,7 +88,7 @@ const Node = ({
     ? "node-bomb"
     : finish
     ? "node-finish"
-    : startNodeRow === row && startNodeCol === col
+    : start
     ? "node-start"
     : wall
     ? "node-wall"

@@ -11,7 +11,7 @@ export function depthFirstSearch(grid, startNode, endNode) {
       visitedNodesInOrder.push(curNode);
       return visitedNodesInOrder;
     }
-    const neighbor = getUnvisitedNeighbor(curNode, grid, endNode);
+    const neighbor = getUnvisitedNeighbor(curNode, grid);
     if (neighbor === 0) {
       stack.shift();
     } else {
@@ -23,7 +23,7 @@ export function depthFirstSearch(grid, startNode, endNode) {
   return visitedNodesInOrder;
 }
 
-export function getUnvisitedNeighbor(node, grid, endNode) {
+export function getUnvisitedNeighbor(node, grid) {
   let neighbor = 0;
   const { col, row } = node;
   if (row > 0 && !grid[row - 1][col].isVisited && !grid[row - 1][col].isWall) {

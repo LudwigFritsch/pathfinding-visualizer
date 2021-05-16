@@ -1,15 +1,10 @@
-/*FIXED THE  NOT DRAGGABLE BUG!!!!!!!!!!!!!!!!!*/
-* {
-  user-select: none;
-}
-/*FIXED THE NOT DRAGGABLE BUG!!!!!!!!!!!!!!!!!*/
-
 .node {
   background-color: white;
   border: 1px solid rgb(175, 216, 248);
   height: 100%;
   width: 100%;
   display: block;
+  border-radius: 2px;
 }
 
 .node-start {
@@ -194,6 +189,7 @@
   background-image: url(https://svgshare.com/getbyhash/sha1-yAWHMbXmBhkwTLV77DIPjK7SHn4=);
   background-position: center;
   background-size: contain;
+  background-color: rgb(255, 254, 106);
 }
 
 .node-shortest-path-pre-left {
