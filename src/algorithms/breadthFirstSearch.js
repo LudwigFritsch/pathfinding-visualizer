@@ -8,6 +8,7 @@ export function breadthFirstSearch(grid, startNode, endNode) {
     const curNode = stack.shift();
 
     if (curNode === endNode || curNode.distance === "Infinity") {
+      visitedNodesInOrder.push(curNode);
       return visitedNodesInOrder;
     }
     if (curNode.isWall && curNode !== startNode && curNode !== endNode) {
