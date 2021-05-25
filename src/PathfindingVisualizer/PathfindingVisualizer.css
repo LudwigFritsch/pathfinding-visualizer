@@ -7,7 +7,7 @@
   background-color: rgba(255, 255, 255, 1);
   width: 50%;
   height: 70%;
-  border: 2px solid rgb(12, 53, 71);
+  border: 2px solid #34495e;
   border-radius: 4px;
   text-align: center;
   float: right;
@@ -19,7 +19,8 @@
   top: 0;
   left: 0;
   right: 0;
-  font-family: "Lato", Helvetica, Arial, sans-serif;
+  white-space: pre-wrap;
+  overflow: hidden;
 }
 
 .tutorial-hidden {
@@ -99,6 +100,7 @@
   width: 115px;
   font-family: inherit;
   font-weight: 500;
+  border-radius: 3px;
 }
 
 /* .skipButton:hover {
@@ -111,12 +113,13 @@
   color: #ffffff;
   background-color: rgba(0, 190, 218, 0.75);
   position: absolute;
-  right: 15%;
+  right: 13%;
   bottom: 2%;
-  height: 45px;
-  width: 100px;
+  max-height: 45px;
+  max-width: 100px;
   font-family: inherit;
   font-weight: 500;
+  border-radius: 3px;
 }
 
 .nextButton {
@@ -125,20 +128,38 @@
   position: absolute;
   right: 2%;
   bottom: 2%;
-  height: 45px;
-  width: 100px;
+  max-height: 45px;
+  max-width: 100px;
   font-family: inherit;
   font-weight: 500;
+  margin-left: 20px;
+  border-radius: 3px;
 }
 
 .imageTutorial {
   padding-top: 5px;
   vertical-align: middle;
+  width: 30%;
 }
 
-.imageTutorialOne {
+.imageTutorialNav {
   padding-top: 5px;
   vertical-align: middle;
+  width: 90%;
+}
+
+.imageTutorialSix {
+  padding-top: 5px;
+  vertical-align: middle;
+  width: 15%;
+}
+
+.imageTutorialGivFive {
+  width: 45%;
+}
+
+.imageTutorialGivSeven {
+  width: 46%;
 }
 
 .paragraphTutorial {
@@ -222,12 +243,12 @@ button {
   font-size: 15px;
   padding: 0px 21px;
   line-height: 6vh;
-  font-weight: 700;
+  font-weight: 600;
   background-color: rgba(0, 0, 0, 0);
   color: whitesmoke;
   transition: color 0.3s;
   border: none;
-  border-radius: 5px;
+  /* border-radius: 5px; */
 }
 
 button:hover {
@@ -296,6 +317,11 @@ button:hover {
   border: 2px solid white;
   background-color: rgb(12, 53, 71);
   color: white;
+  border-radius: 4px;
+}
+
+a {
+  cursor: pointer;
 }
 
 .visualize:hover {
@@ -557,82 +583,23 @@ p {
 }
 
 /* END EXPLANATION SECTION */
-@media only screen and (min-width: 1920px) {
-  .grid {
-    user-select: none;
-    display: grid;
-    grid-template-columns: repeat(75, 2.6vh);
-    grid-template-rows: repeat(31, 2.6vh);
-    min-width: none;
-  }
+
+.grid {
+  overflow: hidden;
+  user-select: none;
+  display: grid;
+  grid-template-columns: repeat(75, 2.6vh);
+  grid-template-rows: repeat(31, 2.6vh);
+  min-width: none;
+  padding-bottom: 5px;
 }
 
-@media only screen and (min-width: 1660px) and (max-width: 1919px) {
-  .grid {
-    user-select: none;
-    display: grid;
-    grid-template-columns: repeat(75, 2.3vh);
-    grid-template-rows: repeat(31, 2.3vh);
-    min-width: none;
-  }
-}
-
-@media only screen and (min-width: 1410px) and (max-width: 1659px) {
-  .grid {
-    user-select: none;
-    display: grid;
-    grid-template-columns: repeat(75, 2.3vh);
-    grid-template-rows: repeat(31, 2.3vh);
-    min-width: none;
-  }
-}
-
-@media only screen and (max-width: 1409px) {
-  .grid {
-    user-select: none;
-    display: grid;
-    grid-template-columns: repeat(75, 2.3vh);
-    grid-template-rows: repeat(31, 2.3vh);
-    min-width: none;
-  }
-}
-
-@media only screen and (min-width: 1920px) {
-  .grid-not-clickable {
-    display: grid;
-    grid-template-columns: repeat(75, 2.6vh);
-    grid-template-rows: repeat(31, 2.6vh);
-    min-width: none;
-    pointer-events: none;
-  }
-}
-
-@media only screen and (min-width: 1660px) and (max-width: 1919px) {
-  .grid-not-clickable {
-    display: grid;
-    grid-template-columns: repeat(75, 2.3vh);
-    grid-template-rows: repeat(31, 2.3vh);
-    min-width: none;
-    pointer-events: none;
-  }
-}
-
-@media only screen and (min-width: 1410px) and (max-width: 1659px) {
-  .grid-not-clickable {
-    display: grid;
-    grid-template-columns: repeat(75, 2.3vh);
-    grid-template-rows: repeat(31, 2.3vh);
-    min-width: none;
-    pointer-events: none;
-  }
-}
-
-@media only screen and (max-width: 1409px) {
-  .grid-not-clickable {
-    display: grid;
-    grid-template-columns: repeat(75, 2.3vh);
-    grid-template-rows: repeat(31, 2.3vh);
-    min-width: none;
-    pointer-events: none;
-  }
+.grid-not-clickable {
+  padding-bottom: 5px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(75, 2.6vh);
+  grid-template-rows: repeat(31, 2.6vh);
+  min-width: none;
+  pointer-events: none;
 }
