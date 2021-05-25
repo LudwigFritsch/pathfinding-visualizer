@@ -1,6 +1,6 @@
 {
   "homepage": "http://LudwigFritsch.github.io/PathfindingVisualizer",
-  "name": "PathfindingVisualizer",
+  "name": "Pathfinding-Visualizer",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
