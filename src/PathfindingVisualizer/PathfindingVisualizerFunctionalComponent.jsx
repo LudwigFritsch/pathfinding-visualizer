@@ -24,7 +24,6 @@ export let isBombActive = false;
 export let bombNodeRow;
 export let bombNodeCol;
 export let clear = false;
-const walls = [];
 export let grid = getInitialGrid(
   startNodeRow,
   startNodeCol,
@@ -576,7 +575,7 @@ const PathfindingVisualizerFunctionalComponent = () => {
 
       <div className="navBar" id="navBar">
         <a
-          href="https://ludwigfritsch.github.io/PathfindingVisualizer/"
+          href="http://LudwigFritsch.github.io/PathfindingVisualizer"
           className="homeButton"
         >
           PathfindingVisualizer
@@ -1006,8 +1005,6 @@ export function getGridClearWalls(
   for (let i = 0; i < grid.length; i++) {
     let row = [];
     for (let j = 0; j < grid[i].length; j++) {
-      const node = grid[i][j];
-
       row.push(
         createNewNode(
           i,
@@ -1083,7 +1080,6 @@ export function resetGrid() {
 export function makeGridOnFirstRender() {
   for (let row = 0; row < grid.length; row++) {
     for (let col = 0; col < grid[row].length; col++) {
-      const nodeCopy = grid[row][col];
       const node = document.getElementById(`node-${row}-${col}`);
       node.className = "node";
 

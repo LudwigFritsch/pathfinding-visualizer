@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Node.css";
-import {
-  isBombActive,
-  startNodeCol,
-  startNodeRow,
-} from "../PathfindingVisualizerFunctionalComponent";
-import { clear } from "../PathfindingVisualizerFunctionalComponent";
+import { isBombActive } from "../PathfindingVisualizerFunctionalComponent";
 import { grid } from "../PathfindingVisualizerFunctionalComponent";
 
 let mouseIsPressed = false;
