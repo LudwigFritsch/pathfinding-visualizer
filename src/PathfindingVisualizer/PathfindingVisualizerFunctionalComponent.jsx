@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { dijkstra } from "../algorithms/dijkstra";
+import { recursiveDivision } from "../algorithms/recursiveDivision";
 import { aStarSearch } from "../algorithms/aStarSearch.js";
 import { greedyBestFirstSearch } from "../algorithms/greedyBestFirstSearch.js";
 import { getNodesInShortestPathOrder } from "../algorithms/getNodesInShortestPathOrder.js";
@@ -639,6 +640,8 @@ const PathfindingVisualizerFunctionalComponent = () => {
           </li>
         </ul>
 
+        <button onClick={rec}>recursive </button>
+
         <button
           id="click1"
           className="click"
@@ -1102,7 +1105,7 @@ export function makeAlgorithm(algorithm, aSpeed) {
   let visitedNodesInOrderTwo;
 
   if (aSpeed === "Fast") {
-    animationSpeed = 15;
+    animationSpeed = 11;
     shortestPathSpeed = 40;
   } else if (aSpeed === "Average") {
     animationSpeed = 25;
@@ -1350,6 +1353,14 @@ export function animateSecond(
           "node-visited-start";
       }, animationSpeed * i);
     }
+  }
+}
+
+export function rec() {
+  const nodes = recursiveDivision(grid);
+  for (let i = 0; i < nodes.length; i++) {
+    document.getElementById(`node-${nodes[i].row}-${nodes[i].col}`).className =
+      "node-wall";
   }
 }
 
