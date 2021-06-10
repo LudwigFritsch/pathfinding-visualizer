@@ -19,4 +19,5 @@ When a user clicks on a node, not only the Node Component gets updated(changes i
 gets updated as well(e.g. the arrtribute isWall gets toggled).    
 The array of nodes gets passed as an argument to a pathfinding algorithm which returns an array of nodes in which   
 it visited the nodes when searching for the shortest path.  
-This returned array the gets traversed and every Node component corresponding to a node in this array changes it color.  
+This returned array then gets traversed and every Node component corresponding to a node in this array changes it color.  
+Finally the shortest path is calculated by backtracking the nodes starting at finishnode.
