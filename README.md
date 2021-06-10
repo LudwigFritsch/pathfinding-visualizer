@@ -15,6 +15,8 @@ The project was built in React 17.0.2.
 At the base of the project lies a two-dimensional array of nodes.  
 Each node has properties like row, column, isVisited etc.  
 For each node in the array a Node React Component gets rendered, in total they form the grid you can see and interact with.  
-When a user clicks on a node, not only the Node Component gets updated(changes its color) but the node in the array get updated as well(e.g. the arrtribute isWall gets toggled).    
-The array of nodes gets passed as an argument to a pathfinding algorithm which returns an array of nodes in which it visited the nodes when searching for the shortest path.  
+When a user clicks on a node, not only the Node Component gets updated(changes its color) but the node in the array   
+gets updated as well(e.g. the arrtribute isWall gets toggled).    
+The array of nodes gets passed as an argument to a pathfinding algorithm which returns an array of nodes in which   
+it visited the nodes when searching for the shortest path.  
 This returned array the gets traversed and every Node component corresponding to a node in this array changes it color.  
