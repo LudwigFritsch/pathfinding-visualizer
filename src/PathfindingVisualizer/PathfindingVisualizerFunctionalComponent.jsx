@@ -640,8 +640,6 @@ const PathfindingVisualizerFunctionalComponent = () => {
           </li>
         </ul>
 
-        <button onClick={rec}>recursive </button>
-
         <button
           id="click1"
           className="click"
@@ -1105,8 +1103,8 @@ export function makeAlgorithm(algorithm, aSpeed) {
   let visitedNodesInOrderTwo;
 
   if (aSpeed === "Fast") {
-    animationSpeed = 11;
-    shortestPathSpeed = 40;
+    animationSpeed = 12;
+    shortestPathSpeed = 45;
   } else if (aSpeed === "Average") {
     animationSpeed = 25;
     shortestPathSpeed = 50;
@@ -1353,14 +1351,6 @@ export function animateSecond(
           "node-visited-start";
       }, animationSpeed * i);
     }
-  }
-}
-
-export function rec() {
-  const nodes = recursiveDivision(grid);
-  for (let i = 0; i < nodes.length; i++) {
-    document.getElementById(`node-${nodes[i].row}-${nodes[i].col}`).className =
-      "node-wall";
   }
 }
 
