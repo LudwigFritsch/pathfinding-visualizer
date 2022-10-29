@@ -1,6 +1,6 @@
 # Pathfinding Visualizer
 
-Welcome to Pathfinding Visualizer! Just a tool to visualize pathfinding algorithms.
+Welcome to Pathfinding Visualizer! Just a tool to visualize pathfinding algorithms.  
 You can play around with it here: https://ludwigfritsch.github.io/PathfindingVisualizer/
 
 ## The Algorithms
